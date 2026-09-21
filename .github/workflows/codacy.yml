@@ -10,6 +10,14 @@ on:
 
 jobs:
   codacy:
+    strategy:
+      fail-fast: ${{ matrix.env-config.experimental == true }}
+      matrix:
+        env-config:
+          - python_version: '3.14'
+            experimental: true
+          - python_version: '3.13'
+
     runs-on: ubuntu-24.04
     services:
       mariadb:
@@ -34,7 +42,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
-        python-version: '3.13'
+        python-version: '${{ matrix.env-config.python_version }}'
 
     - name: Install dependencies
       run: |
