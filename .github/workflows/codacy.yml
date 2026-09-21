@@ -42,6 +42,11 @@ jobs:
         pip install -r requirements.txt
         pip install -e ./rosemary
 
+
+    - name: Check for outdated dependencies
+      run: |
+        pip list --outdated --format=columns
+
     - name: Run tests with coverage
       run: |
         coverage run -m pytest app/features/ --ignore-glob='*selenium*'
